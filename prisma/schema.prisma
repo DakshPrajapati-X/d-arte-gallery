@@ -1,0 +1,34 @@
+// D'Arte Gallery — Prisma Schema
+// PostgreSQL via Neon
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Artwork {
+  id          String   @id @default(uuid())
+  slug        String   @unique
+  title       String
+  artist      String
+  price       Float
+  dimensions  String
+  medium      String
+  year        String
+  framed      Boolean  @default(false)
+  description String   @db.Text
+  story       String   @db.Text
+  imageUrl    String
+  featured    Boolean  @default(false)
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([published])
+  @@index([featured])
+  @@index([artist])
+}
