@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { getAllArtworks, createArtwork } from '@/lib/db/artworks';
 import { validateArtworkInput } from '@/lib/validations/artwork';
 
@@ -28,6 +29,11 @@ export async function POST(request: Request) {
     }
 
     const artwork = await createArtwork(validation.data);
+    
+    // Instantly invalidate public static cache
+    revalidatePath('/');
+    revalidatePath('/collections');
+    
     return NextResponse.json(artwork, { status: 201 });
   } catch (error) {
     console.error('POST /api/artworks error:', error);

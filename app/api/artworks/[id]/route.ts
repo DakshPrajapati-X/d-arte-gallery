@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { getArtworkById, updateArtwork, deleteArtwork } from '@/lib/db/artworks';
 import { validateArtworkInput } from '@/lib/validations/artwork';
 import { deleteImage } from '@/lib/cloudinary';
@@ -45,6 +46,12 @@ export async function PUT(
     }
 
     const artwork = await updateArtwork(id, validation.data);
+    
+    // Invalidate caches
+    revalidatePath('/');
+    revalidatePath('/collections');
+    revalidatePath(`/artwork/${artwork.slug}`);
+    
     return NextResponse.json(artwork);
   } catch (error) {
     console.error('PUT /api/artworks/[id] error:', error);
@@ -76,6 +83,10 @@ export async function DELETE(
         }
       }
     }
+
+    // Invalidate caches
+    revalidatePath('/');
+    revalidatePath('/collections');
 
     return NextResponse.json({ success: true });
   } catch (error) {
