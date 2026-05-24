@@ -7,6 +7,7 @@ import Loader from "@/components/animations/Loader";
 import Header from "@/components/layout/Header";
 import CartDrawer from "@/components/cart/CartDrawer";
 import Footer from "@/components/layout/Footer";
+import { Toaster } from "sonner";
 
 const cormorant = Cormorant_Garamond({
   weight: ["300", "400", "500", "600", "700"],
@@ -50,6 +51,16 @@ export default function RootLayout({
             </main>
             <Footer />
           </SmoothScroll>
+          <Toaster 
+            position="bottom-right" 
+            toastOptions={{
+              className: "font-sans text-xs tracking-widest uppercase border-border bg-background text-foreground rounded-none shadow-xl",
+              style: {
+                borderRadius: '0px',
+                border: '1px solid var(--color-border)'
+              }
+            }}
+          />
         </ThemeProvider>
       </body>
     </html>

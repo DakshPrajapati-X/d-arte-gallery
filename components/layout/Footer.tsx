@@ -10,8 +10,8 @@ export default function Footer() {
         </div>
         
         <div className="flex space-x-8">
-          <Link href="#" className="hover:text-foreground transition-colors">Instagram</Link>
-          <Link href="#" className="hover:text-foreground transition-colors">Pinterest</Link>
+          <a href="https://www.instagram.com/arrt_holic__?igsh=MXVrdnJnc2dhbHczag==" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">Instagram</a>
+          <a href="https://pin.it/42pnU7nPW" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">Pinterest</a>
         </div>
         
         <div className="text-center md:text-right flex flex-col space-y-1">

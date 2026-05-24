@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import type { ArtworkCard } from "@/types/artwork";
+import { toast } from "sonner";
+import { subscribeAction } from "@/app/actions/subscribe";
 
 export default function HomeClient({ featuredWorks, heroImages }: { featuredWorks: ArtworkCard[], heroImages: string[] }) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -151,18 +153,35 @@ export default function HomeClient({ featuredWorks, heroImages }: { featuredWork
       {/* SECTION 4: NEWSLETTER */}
       <section className="py-40 px-6 flex flex-col items-center justify-center text-center bg-[#f0eee9] dark:bg-[#0A0A0A]">
         <div className="max-w-xl w-full">
-          <h2 className="text-xs tracking-widest uppercase text-muted dark:text-muted/80 mb-8">Private Collector List</h2>
+          <h2 className="text-xs tracking-widest uppercase text-muted dark:text-muted/80 mb-8">Private Studio Notes</h2>
           <p className="font-serif text-2xl md:text-3xl leading-relaxed mb-12 dark:text-[#EAEAEA]">
-            Receive exhibition releases and early acquisition access.
+            New works, selected studies, and occasional notes from the studio.
           </p>
-          <form className="w-full flex border-b border-foreground/30 dark:border-border hover:border-foreground transition-colors pb-3 relative group" onSubmit={(e) => e.preventDefault()}>
+          <form 
+            className="w-full flex border-b border-foreground/30 dark:border-border hover:border-foreground transition-colors pb-3 relative group" 
+            action={async (formData) => {
+              const loadingToast = toast.loading("Subscribing...");
+              const result = await subscribeAction(formData);
+              if (result.success) {
+                toast.success(result.message, { id: loadingToast });
+                (document.getElementById('subscribe-form') as HTMLFormElement)?.reset();
+              } else {
+                toast.error(result.error, { id: loadingToast });
+              }
+            }}
+            id="subscribe-form"
+          >
+            {/* Honeypot field for spam protection */}
+            <input type="text" name="website" className="hidden" tabIndex={-1} autoComplete="off" />
+            
             <input
               type="email"
+              name="email"
               placeholder="Email Address"
               className="flex-1 bg-transparent border-none outline-none text-foreground placeholder:text-muted/50 dark:placeholder:text-muted/70 font-sans text-center"
               required
             />
-            <button type="submit" className="absolute right-0 text-xs uppercase tracking-widest font-medium hover:text-muted transition-colors">
+            <button type="submit" className="absolute right-0 text-xs uppercase tracking-widest font-medium hover:text-muted transition-colors disabled:opacity-50">
               Subscribe
             </button>
           </form>

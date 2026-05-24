@@ -32,3 +32,9 @@ model Artwork {
   @@index([featured])
   @@index([artist])
 }
+
+model Subscriber {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
+}

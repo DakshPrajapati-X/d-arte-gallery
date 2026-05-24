@@ -65,13 +65,13 @@ export default function AboutPage() {
             className="w-full md:w-7/12 space-y-8 text-sm md:text-base text-muted/90 dark:text-muted leading-relaxed font-sans"
           >
             <p>
-              D&apos;ARTE was founded on the principle that the most powerful experiences are often the quietest. In a world saturated with visual noise and instantaneous consumption, we seek to cultivate a space for contemplation.
+              Some works begin with deliberate structure. Others arrive through instinct. Across sketchbooks, textured canvases, watercolor studies, and layered oils, each piece is approached slowly — with attention to atmosphere, silence, and detail.
             </p>
             <p>
-              Our artists are selected not for their adherence to trends, but for their deep, almost obsessive engagement with their materials. From the way light interacts with raw unprimed linen, to the weight of charcoal on handmade paper, every texture tells a story.
+              D&apos;ARTE exists as a personal space for collected works and visual studies. Less a traditional gallery, and more an evolving archive of observation, texture, and mood.
             </p>
             <p>
-              We view the acquisition of art not as a transaction, but as the beginning of a lifelong relationship with an object that possesses its own inner life.
+              The artistic practice here is rooted in independent exploration, prioritizing emotional permanence over fleeting aesthetics. It is an invitation to pause, observe, and connect.
             </p>
           </motion.div>
         </div>
@@ -114,7 +114,7 @@ export default function AboutPage() {
             <span className="text-xs tracking-widest uppercase text-muted mb-6 block">Materiality</span>
             <h2 className="font-serif text-3xl md:text-4xl mb-6">The Tactile Experience</h2>
             <p className="text-muted leading-relaxed max-w-md">
-              True luxury lies in the details that can only be felt in person. The grain of the wood, the weave of the canvas, the slight imperfection of a hand-pulled print. These are the elements that breathe life into a space.
+              True luxury lies in the details that can only be felt closely. The subtle drag of brush texture, the depth of layered oil paint, the unpredictable flow of watercolor, and the raw grain of handmade paper. It is in the unfinished strokes where the process breathes.
             </p>
           </motion.div>
         </div>
