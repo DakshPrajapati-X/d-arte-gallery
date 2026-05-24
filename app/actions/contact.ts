@@ -28,7 +28,7 @@ export async function contactAction(formData: FormData) {
 
     await resend.emails.send({
   from: "onboarding@resend.dev",
-  to: "arrtholic@gmail.com",
+  to: "dakshprajapat71726@gmail.com",
   replyTo: email,
   subject: `New Inquiry from ${name}`,
   text: `
