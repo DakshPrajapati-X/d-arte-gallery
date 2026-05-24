@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row justify-between items-center space-y-8 md:space-y-0">
         <div className="text-center md:text-left">
           <p className="mb-1">&copy; 2026 D&apos;ARTE</p>
-          <p className="opacity-70">Curated by Daksh Prajapati</p>
+          <p className="opacity-70 dark:opacity-100 dark:text-muted/70">Curated by Daksh Prajapati</p>
         </div>
         
         <div className="flex space-x-8">

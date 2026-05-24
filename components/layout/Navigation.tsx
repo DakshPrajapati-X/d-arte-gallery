@@ -12,6 +12,7 @@ interface NavigationProps {
 const navLinks = [
   { href: "/collections", label: "Collection", desc: "Selected contemporary works" },
   { href: "/about", label: "About", desc: "The philosophy of quiet luxury" },
+  { href: "/settings", label: "Settings", desc: "Preferences and Theme" },
   { href: "/contact", label: "Contact", desc: "Private acquisition inquiries" },
 ];
 

@@ -89,10 +89,10 @@ export default function HomeClient({ featuredWorks, heroImages }: { featuredWork
           transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
           className="max-w-3xl"
         >
-          <h2 className="font-serif text-3xl md:text-5xl leading-[1.4] text-foreground mb-8">
+          <h2 className="font-serif text-3xl md:text-5xl leading-[1.4] text-foreground dark:text-[#EAEAEA] mb-8">
             &quot;Collected with restraint.<br/>Chosen for emotional permanence.&quot;
           </h2>
-          <p className="text-muted text-sm tracking-widest uppercase">
+          <p className="text-muted text-sm tracking-widest uppercase dark:text-muted/80">
             A sanctuary for works that demand attention without shouting.
           </p>
         </motion.div>
@@ -138,9 +138,9 @@ export default function HomeClient({ featuredWorks, heroImages }: { featuredWork
                 <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-1">
                   <div>
                     <h3 className="font-serif text-xl md:text-2xl group-hover:text-muted transition-colors duration-500">{work.title}</h3>
-                    <p className="text-sm text-muted/80 mt-1">{work.artist}</p>
+                    <p className="text-sm text-muted/80 dark:text-muted mt-1">{work.artist}</p>
                   </div>
-                  <p className="text-xs text-muted/60 tracking-widest mt-1 md:mt-2">${work.price.toLocaleString()}</p>
+                  <p className="text-xs text-muted/60 dark:text-muted/80 tracking-widest mt-1 md:mt-2">${work.price.toLocaleString()}</p>
                 </div>
               </Link>
             </motion.div>
@@ -149,17 +149,17 @@ export default function HomeClient({ featuredWorks, heroImages }: { featuredWork
       </section>
 
       {/* SECTION 4: NEWSLETTER */}
-      <section className="py-40 px-6 flex flex-col items-center justify-center text-center bg-[#f0eee9]">
+      <section className="py-40 px-6 flex flex-col items-center justify-center text-center bg-[#f0eee9] dark:bg-[#0A0A0A]">
         <div className="max-w-xl w-full">
-          <h2 className="text-xs tracking-widest uppercase text-muted mb-8">Private Collector List</h2>
-          <p className="font-serif text-2xl md:text-3xl leading-relaxed mb-12">
+          <h2 className="text-xs tracking-widest uppercase text-muted dark:text-muted/80 mb-8">Private Collector List</h2>
+          <p className="font-serif text-2xl md:text-3xl leading-relaxed mb-12 dark:text-[#EAEAEA]">
             Receive exhibition releases and early acquisition access.
           </p>
-          <form className="w-full flex border-b border-foreground/30 hover:border-foreground transition-colors pb-3 relative group" onSubmit={(e) => e.preventDefault()}>
+          <form className="w-full flex border-b border-foreground/30 dark:border-border hover:border-foreground transition-colors pb-3 relative group" onSubmit={(e) => e.preventDefault()}>
             <input
               type="email"
               placeholder="Email Address"
-              className="flex-1 bg-transparent border-none outline-none text-foreground placeholder:text-muted/50 font-sans text-center"
+              className="flex-1 bg-transparent border-none outline-none text-foreground placeholder:text-muted/50 dark:placeholder:text-muted/70 font-sans text-center"
               required
             />
             <button type="submit" className="absolute right-0 text-xs uppercase tracking-widest font-medium hover:text-muted transition-colors">

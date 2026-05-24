@@ -24,24 +24,33 @@ export const metadata: Metadata = {
   description: "A world-class luxury digital gallery and cinematic boutique art platform.",
 };
 
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className={`${cormorant.variable} ${inter.variable} antialiased bg-background text-foreground`}>
-        <Loader />
-        <CustomCursor />
-        <SmoothScroll>
-          <Header />
-          <CartDrawer />
-          <main className="min-h-screen pt-24 relative">
-            {children}
-          </main>
-          <Footer />
-        </SmoothScroll>
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
+      <body className={`${cormorant.variable} ${inter.variable} antialiased bg-background text-foreground transition-colors duration-500 ease-[0.22,1,0.36,1]`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange={false}
+        >
+          <Loader />
+          <CustomCursor />
+          <SmoothScroll>
+            <Header />
+            <CartDrawer />
+            <main className="min-h-screen pt-24 relative">
+              {children}
+            </main>
+            <Footer />
+          </SmoothScroll>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -62,7 +62,7 @@ export default function AboutPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1, delay: 0.2 }}
-            className="w-full md:w-7/12 space-y-8 text-sm md:text-base text-muted/90 leading-relaxed font-sans"
+            className="w-full md:w-7/12 space-y-8 text-sm md:text-base text-muted/90 dark:text-muted leading-relaxed font-sans"
           >
             <p>
               D&apos;ARTE was founded on the principle that the most powerful experiences are often the quietest. In a world saturated with visual noise and instantaneous consumption, we seek to cultivate a space for contemplation.
@@ -78,7 +78,7 @@ export default function AboutPage() {
       </section>
 
       {/* 3. Fullscreen Editorial Quote */}
-      <section className="py-40 px-6 flex items-center justify-center bg-[#f0eee9] text-center">
+      <section className="py-40 px-6 flex items-center justify-center bg-[#f0eee9] dark:bg-[#0A0A0A] text-center">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -86,7 +86,7 @@ export default function AboutPage() {
           transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
           className="max-w-4xl"
         >
-          <h3 className="font-serif text-3xl md:text-5xl leading-[1.4] text-foreground/90">
+          <h3 className="font-serif text-3xl md:text-5xl leading-[1.4] text-foreground/90 dark:text-[#EAEAEA] dark:opacity-100">
             &quot;We collect with restraint, prioritizing emotional permanence over fleeting aesthetics.&quot;
           </h3>
         </motion.div>
