@@ -27,18 +27,18 @@ export async function contactAction(formData: FormData) {
     }
 
     await resend.emails.send({
-      from: "D'ARTE Inquiries <noreply@resend.dev>", // Replace with verified domain in production
-      to: "arrtholic@gmail.com",
-      replyTo: email,
-      subject: `New Inquiry from ${name}`,
-      text: `
+  from: "onboarding@resend.dev",
+  to: "arrtholic@gmail.com",
+  replyTo: email,
+  subject: `New Inquiry from ${name}`,
+  text: `
 Name: ${name}
 Email: ${email}
 
 Message:
 ${message}
-      `,
-    });
+  `,
+});
 
     return { success: true, message: "Your inquiry has been sent." };
   } catch (error) {
