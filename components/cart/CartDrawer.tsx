@@ -114,7 +114,7 @@ export default function CartDrawer() {
                   <span className="text-sm uppercase tracking-widest">Subtotal</span>
                   <span className="font-serif text-xl">${subtotal.toLocaleString()}</span>
                 </div>
-                <p className="text-xs text-muted mb-6">Shipping and taxes calculated at checkout.</p>
+                <p className="text-xs text-muted mb-6">Acquisition and delivery details shared privately.</p>
                 <Link
                   href="/checkout"
                   onClick={closeCart}

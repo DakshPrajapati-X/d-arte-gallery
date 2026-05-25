@@ -1,14 +1,43 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { useCartStore } from "@/store/useCartStore";
+import { checkoutInquiryAction } from "@/app/actions/checkoutInquiry";
 import Image from "next/image";
 import Link from "next/link";
 import { Lock } from "lucide-react";
 
 export default function CheckoutPage() {
-  const { items, getTotals } = useCartStore();
+  const { items, getTotals, removeItem } = useCartStore();
   const { subtotal } = getTotals();
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  if (isSubmitted) {
+    return (
+      <div className="w-full min-h-screen px-6 md:px-12 py-32 flex flex-col items-center justify-center text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <h1 className="font-serif text-4xl mb-4">Inquiry Received</h1>
+          <p className="text-sm text-muted max-w-md mx-auto mb-8 leading-relaxed">
+            Your inquiry has been received. Further correspondence will be shared privately.
+          </p>
+          <Link
+            href="/collections"
+            className="text-xs tracking-widest uppercase border-b border-foreground pb-1 hover:text-muted transition-colors"
+          >
+            Return to Gallery
+          </Link>
+        </motion.div>
+      </div>
+    );
+  }
 
   if (items.length === 0) {
     return (
@@ -19,6 +48,45 @@ export default function CheckoutPage() {
         </Link>
       </div>
     );
+  }
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setError(null);
+    setIsSubmitting(true);
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    const data = {
+      email: formData.get("email")?.toString() || "",
+      firstName: formData.get("firstName")?.toString() || "",
+      lastName: formData.get("lastName")?.toString() || "",
+      address: formData.get("address")?.toString() || "",
+      apartment: formData.get("apartment")?.toString() || "",
+      city: formData.get("city")?.toString() || "",
+      state: formData.get("state")?.toString() || "",
+      zip: formData.get("zip")?.toString() || "",
+      items: items.map((item) => ({
+        id: item.id,
+        title: item.title,
+        price: item.price,
+        quantity: item.quantity,
+      })),
+      subtotal,
+    };
+
+    const result = await checkoutInquiryAction(data);
+
+    if (result.success) {
+      // Clear the cart after successful submission
+      items.forEach((item) => removeItem(item.id));
+      setIsSubmitted(true);
+    } else {
+      setError(result.error || "Something went wrong. Please try again.");
+    }
+
+    setIsSubmitting(false);
   }
 
   return (
@@ -32,13 +100,15 @@ export default function CheckoutPage() {
       >
         <h1 className="font-serif text-4xl mb-12">Checkout</h1>
 
-        <form className="space-y-12" onSubmit={(e) => e.preventDefault()}>
+        <form className="space-y-12" onSubmit={handleSubmit}>
           {/* Contact */}
           <section>
             <h2 className="text-sm tracking-widest uppercase mb-6">Contact Information</h2>
             <div className="space-y-4">
               <input
                 type="email"
+                name="email"
+                required
                 placeholder="Email Address"
                 className="w-full p-4 bg-transparent border border-border outline-none focus:border-foreground transition-colors placeholder:text-muted/50"
               />
@@ -52,38 +122,51 @@ export default function CheckoutPage() {
               <div className="grid grid-cols-2 gap-4">
                 <input
                   type="text"
+                  name="firstName"
+                  required
                   placeholder="First Name"
                   className="w-full p-4 bg-transparent border border-border outline-none focus:border-foreground transition-colors placeholder:text-muted/50"
                 />
                 <input
                   type="text"
+                  name="lastName"
+                  required
                   placeholder="Last Name"
                   className="w-full p-4 bg-transparent border border-border outline-none focus:border-foreground transition-colors placeholder:text-muted/50"
                 />
               </div>
               <input
                 type="text"
+                name="address"
+                required
                 placeholder="Address"
                 className="w-full p-4 bg-transparent border border-border outline-none focus:border-foreground transition-colors placeholder:text-muted/50"
               />
               <input
                 type="text"
+                name="apartment"
                 placeholder="Apartment, suite, etc. (optional)"
                 className="w-full p-4 bg-transparent border border-border outline-none focus:border-foreground transition-colors placeholder:text-muted/50"
               />
               <div className="grid grid-cols-3 gap-4">
                 <input
                   type="text"
+                  name="city"
+                  required
                   placeholder="City"
                   className="w-full p-4 bg-transparent border border-border outline-none focus:border-foreground transition-colors placeholder:text-muted/50 col-span-1"
                 />
                 <input
                   type="text"
+                  name="state"
+                  required
                   placeholder="State"
                   className="w-full p-4 bg-transparent border border-border outline-none focus:border-foreground transition-colors placeholder:text-muted/50 col-span-1"
                 />
                 <input
                   type="text"
+                  name="zip"
+                  required
                   placeholder="ZIP"
                   className="w-full p-4 bg-transparent border border-border outline-none focus:border-foreground transition-colors placeholder:text-muted/50 col-span-1"
                 />
@@ -91,36 +174,25 @@ export default function CheckoutPage() {
             </div>
           </section>
 
-          {/* Payment */}
+          {/* Acquisition Request (replaces Payment) */}
           <section>
-            <h2 className="text-sm tracking-widest uppercase mb-6">Payment</h2>
-            <div className="p-4 border border-border bg-muted/5 mb-4 flex items-center justify-between">
-              <span className="text-sm text-muted">Test mode is active. Use any card details.</span>
-              <Lock size={14} className="text-muted" />
-            </div>
-            <div className="space-y-4">
-              <input
-                type="text"
-                placeholder="Card Number"
-                className="w-full p-4 bg-transparent border border-border outline-none focus:border-foreground transition-colors placeholder:text-muted/50"
-              />
-              <div className="grid grid-cols-2 gap-4">
-                <input
-                  type="text"
-                  placeholder="MM / YY"
-                  className="w-full p-4 bg-transparent border border-border outline-none focus:border-foreground transition-colors placeholder:text-muted/50"
-                />
-                <input
-                  type="text"
-                  placeholder="CVC"
-                  className="w-full p-4 bg-transparent border border-border outline-none focus:border-foreground transition-colors placeholder:text-muted/50"
-                />
-              </div>
+            <h2 className="text-sm tracking-widest uppercase mb-6">Acquisition Request</h2>
+            <div className="p-4 border border-border bg-muted/5 flex items-center justify-between">
+              <span className="text-sm text-muted">Your request will be personally reviewed. Further acquisition and shipping details are shared privately.</span>
+              <Lock size={14} className="text-muted flex-shrink-0 ml-4" />
             </div>
           </section>
 
-          <button className="w-full py-5 bg-foreground text-background text-xs tracking-[0.2em] uppercase hover:bg-foreground/90 transition-colors mt-8">
-            Complete Acquisition
+          {error && (
+            <p className="text-sm text-muted">{error}</p>
+          )}
+
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full py-5 bg-foreground text-background text-xs tracking-[0.2em] uppercase hover:bg-foreground/90 transition-colors mt-8 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isSubmitting ? "Submitting…" : "Submit Inquiry"}
           </button>
         </form>
       </motion.div>
